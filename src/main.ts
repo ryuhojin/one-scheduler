@@ -1,6 +1,9 @@
 /*****************************************************************************************
  * file - main.tsx
  * description - Electron App Root
+ * - 일렉트론 앱 구동
+ * - 브라우저 생성 및 로딩
+ * - 로컬 api리시버 활성화
  * ---------------------------------------------------------------------------------------
  * (수정자(이름) / 날짜 / 내용)
  * 류호진 / 2024.03.18 / 최초작성
@@ -24,10 +27,15 @@ createIpcHandler();
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
+    autoHideMenuBar: true,
+    resizable: true,
+    frame: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false,
     },
   });
 
@@ -39,15 +47,25 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   }
 
-  apiReciever.listen(8080, () => {
-    console.log("ELECTRON_SERVER RUNNING ON 8080");
-  })
+
 };
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.whenReady().then(() => {
+    createWindow();
+    app.on('activate', () => {
+      BrowserWindow.getAllWindows().length === 0 && createWindow();
+    })
+    apiReciever.listen(8080, () => {
+      console.log("ELECTRON_SERVER RUNNING ON 8080");
+    })
+});
+
+app.on('before-quit', () => {
+  apiReciever.close();
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
@@ -59,13 +77,7 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
-});
+
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.

@@ -23,6 +23,6 @@
 ##### 2024.03.18 초기 프로젝트 구성
 - electron + electron_forge + vite + react setting
 
-##### 2024.03.18 ipc통신 및 기타 통신 작업
+##### 2024.03.19 ipc통신 및 기타 통신 작업
 - 외부 api와 통신할 것이기 때문에 http 통신 리시버와, ipc 통신을 위한 custom hook 작성
 - tanstack-router적용(파일 기반 라우팅 예정) 
