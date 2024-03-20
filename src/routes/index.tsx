@@ -7,7 +7,6 @@
  *****************************************************************************************/
 
 import { createFileRoute } from '@tanstack/react-router'
-import Calendar from '@/components/calendar/Calendar'
 
 export const Route = createFileRoute('/')({
     component: Index,
@@ -16,7 +15,7 @@ export const Route = createFileRoute('/')({
 function Index() {
     return (
         <div className="p-2">
-            <Calendar />
+            <></>
         </div>
     )
 }

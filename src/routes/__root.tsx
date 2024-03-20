@@ -6,14 +6,18 @@
  * 류호진 / 2024.03.18 / 최초작성
  *****************************************************************************************/
 
+import LoginContainer from '@/containers/base/LoginContainer'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 
 export const Route = createRootRoute({
-    component: () => (
-        <>
+    component: () => {
+        if (true) {
+            return <LoginContainer />
+        }
+        return <>
             <Outlet />
             {process.env.NODE_ENV == 'development' && <TanStackRouterDevtools />}
         </>
-    ),
+    },
 })
