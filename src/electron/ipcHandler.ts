@@ -11,7 +11,12 @@ import Store from "electron-store";
 
 const store = new Store();
 
-const createIpcHandler = () => {
+const createIpcHandler = () => { 
+
+    ipcMain.handle('testInvoke', (event, data) => {
+        return data;
+    })
+
     ipcMain.handle('setStoreValue', (event, data) => {
         const { key, value } = data;
         store.set(key, value);
@@ -20,6 +25,10 @@ const createIpcHandler = () => {
 
     ipcMain.handle('getStoreValue', (event, key) => {
         return store.get(key);
+    })
+
+    ipcMain.on('testSend',(event)=>{
+        console.log('test1')
     })
 };
 
