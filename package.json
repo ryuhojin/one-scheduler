@@ -1,0 +1,15 @@
+{
+  "name": "one-line",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.9.0",
+  "scripts": {
+    "dev:api": "pnpm --filter @one-line/api dev",
+    "dev:web": "pnpm --filter @one-line/admin-web dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}
